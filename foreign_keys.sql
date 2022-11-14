@@ -12,6 +12,8 @@ CREATE TABLE products(
     CONSTRAINT fk_category
     FOREIGN KEY (categoryId) 
         REFERENCES categories(categoryId)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 -- Because we don’t specify any ON UPDATE and ON DELETE clauses, the default action is RESTRICT for both update and delete operation.
@@ -22,7 +24,10 @@ VALUES
     ('Smartwatch');
 
 INSERT INTO products(productName, categoryId)
-VALUES('iPhone',1);
+VALUES('iPhone', 1), 
+    ('Galaxy Note',1),
+    ('Apple Watch',2),
+    ('Samsung Galary Watch',2);
 
 -- this one throws error because id 3 doesn't exist in parent table
 INSERT INTO products(productName, categoryId)

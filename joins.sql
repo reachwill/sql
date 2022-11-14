@@ -204,6 +204,7 @@ FROM
     customers c
 LEFT JOIN orders o 
     ON c.customerNumber = o.customerNumber;
+ORDER BY status
 
 -- 7 ********* LEFT JOIN clause is very useful when you want to find rows in a table that doesn’t have a matching row from another table ******************
 -- The following example uses the LEFT JOIN to find customers who have no order:
@@ -308,12 +309,18 @@ LEFT JOIN customers ON
 WHERE salesRepEmployeeNumber is NULL
 ORDER BY employeeNumber;
 
--- total number of emloyees not in charge of customers
+-- total number of employees not in charge of customers
 
-SELECT count(employeeNumber) 'Total needing a customer' from employees left join customers on salesRepEmployeeNumber = employeeNumber where salesRepEmployeeNumber is null
+SELECT count(employeeNumber) 'Total needing a customer' 
+from employees 
+left join customers on salesRepEmployeeNumber = employeeNumber 
+where salesRepEmployeeNumber is null
 
 -- or
-SELECT count(employeeNumber) 'Total needing a customer' from customers right join employees on salesRepEmployeeNumber = employeeNumber where salesRepEmployeeNumber is  null
+SELECT count(employeeNumber) 'Total needing a customer' 
+from customers 
+right join employees on salesRepEmployeeNumber = employeeNumber 
+where salesRepEmployeeNumber is  null
 
 -- BACK TO SLIDES Self Join
 
