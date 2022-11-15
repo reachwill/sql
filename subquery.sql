@@ -97,3 +97,18 @@ WHERE
             customerNumber = customers.customerNumber
         GROUP BY orderNumber
         HAVING SUM(priceEach * quantityOrdered) > 60000);
+
+-- COMPARE WITH ABOVE
+SELECT 
+    customerNumber, 
+    customerName
+FROM
+    customers c
+WHERE
+    EXISTS( SELECT 
+            o.orderNumber, SUM(priceEach * quantityOrdered)
+        FROM
+            orderDetails od
+        INNER JOIN orders o ON od.orderNumber = o.orderNumber AND o.customerNumber = c.customerNumber
+        GROUP BY od.orderNumber
+        HAVING SUM(priceEach * quantityOrdered) > 60000);

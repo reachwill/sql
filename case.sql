@@ -1,5 +1,39 @@
 -- 01 Simple
 
+SELECT country,
+CASE 
+	WHEN country =  'USA' THEN '2-day Shipping'
+	WHEN country =  'UK' THEN '5-day Shipping'
+    ELSE '5-day Shipping'
+END AS Shipping
+FROM
+    customers
+
+-- ---- Use variable -----------
+SELECT 
+OrderNumber,
+@waitingDay := DATEDIFF(requiredDate, shippedDate) AS DaysLate,
+CASE
+	WHEN @waitingDay = 0 THEN 'On time'
+	WHEN @waitingDay  >= 1 AND @waitingDay < 5  THEN 'Late'
+	WHEN @waitingDay  >= 5 THEN 'Very late'
+	ELSE 'No information'
+END AS DeliveryStatus
+FROM orders;
+
+-- ORDER BY
+SELECT CustomerName, City, Country
+FROM customers
+ORDER BY
+(CASE
+    WHEN City IS NULL THEN Country
+    ELSE City
+END);
+
+
+
+
+
 DELIMITER $$
 
 CREATE PROCEDURE GetCustomerShipping(
